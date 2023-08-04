@@ -1,0 +1,23 @@
+name: Test conda-lock GitHub Action
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  lock-debug:
+    runs-on: ubuntu-22.04
+    steps:
+      # Checkout current git repository
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Run conda-lock GitHub Action
+      - name: Run conda-lock
+        uses: ./
+        with:
+          file: "environment.yml"
+          platform: "linux-64"
