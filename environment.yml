@@ -1,0 +1,6 @@
+name: refresh
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - numpy=1.25

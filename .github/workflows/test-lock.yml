@@ -1,0 +1,25 @@
+name: Test conda-lock GitHub Action
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  lock-debug:
+    permissions:
+      contents: write  # for Git to git push
+    runs-on: ubuntu-22.04
+    steps:
+      # Checkout current git repository
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
+          ref: ${{ github.head_ref }}
+
+      # Run conda-lock GitHub Action
+      - name: Run conda-lock
+        uses: ./
+        with:
+          file: "environment.yml"
+          platform: "linux-64"
