@@ -1,8 +1,5 @@
 name: Test conda-lock GitHub Action
 on:
-  push:
-    branches:
-    - main
   pull_request:
     branches:
     - main
@@ -14,6 +11,9 @@ jobs:
       # Checkout current git repository
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.client_payload.pull_request.head.ref }}
 
       # Run conda-lock GitHub Action
       - name: Run conda-lock
