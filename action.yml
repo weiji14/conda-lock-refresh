@@ -13,6 +13,10 @@ inputs:
     description: 'Path to the conda environment specification(s)'
     required: true
     default: 'environment.yml'
+  kind:
+    description: "Kind of lock file(s) to generate [should be one of 'lock', 'explicit', or 'env']"
+    required: false
+    default: 'lock'
   platform:
     description: 'The platforms to generate the lockfile for'
     required: false
@@ -42,7 +46,7 @@ runs:
     - name: Run conda-lock
       run: |
         rm --force conda-lock.yml
-        conda-lock lock --file ${{ inputs.file }} --platform ${{ inputs.platform }}
+        conda-lock lock --file ${{ inputs.file }} --kind ${{ inputs.kind }} --platform ${{ inputs.platform }}
       shell: bash -l {0}
 
     # Print contents of lockfile

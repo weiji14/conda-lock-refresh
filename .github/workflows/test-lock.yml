@@ -22,4 +22,5 @@ jobs:
         uses: ./
         with:
           file: "environment.yml"
+          kind: "lock"
           platform: "linux-64"
