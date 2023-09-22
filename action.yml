@@ -17,6 +17,10 @@ inputs:
     description: "Kind of lock file(s) to generate [should be one of 'lock', 'explicit', or 'env']"
     required: false
     default: 'lock'
+  mamba:
+    description: "Use the mamba solver [should be either 'true' or 'false']"
+    required: false
+    default: true
   platform:
     description: 'The platforms to generate the lockfile for'
     required: false
@@ -25,20 +29,20 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # Setup Python environment
-    - uses: actions/setup-python@v4
+    # Install conda-lock library with Micromamba
+    - uses: mamba-org/setup-micromamba@v1
       with:
-        python-version: '3.11'
-
-    # Install conda-lock library and show version
-    - name: Install conda-lock
-      run: python -m pip install conda-lock
-      shell: bash -l {0}
+        environment-name: conda-lock-env
+        create-args: >-
+          python=3.11
+          conda-lock
+          mamba
 
     # Print debugging information
     - name: Print debug info
       run: |
         conda-lock --version
+        mamba --version
         echo Locking ${{ inputs.file }} file for ${{ inputs.platform }} platform.
       shell: bash -l {0}
 
@@ -46,7 +50,9 @@ runs:
     - name: Run conda-lock
       run: |
         rm --force conda-lock.yml
-        conda-lock lock --file ${{ inputs.file }} --kind ${{ inputs.kind }} --platform ${{ inputs.platform }}
+        conda-lock lock $MAMBA --file ${{ inputs.file }} --kind ${{ inputs.kind }} --platform ${{ inputs.platform }}
+      env:
+        MAMBA: "${{ inputs.mamba && '--mamba' || '--no-mamba' }}"  # use --mamba if true, else --no-mamba
       shell: bash -l {0}
 
     # Print contents of lockfile
