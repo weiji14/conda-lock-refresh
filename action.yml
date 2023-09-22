@@ -32,6 +32,7 @@ runs:
         create-args: >-
           python=3.11
           conda-lock
+          mamba
 
     # Print debugging information
     - name: Print debug info
@@ -45,7 +46,7 @@ runs:
     - name: Run conda-lock
       run: |
         rm --force conda-lock.yml
-        conda-lock lock --file ${{ inputs.file }} --kind ${{ inputs.kind }} --platform ${{ inputs.platform }}
+        conda-lock lock --mamba --file ${{ inputs.file }} --kind ${{ inputs.kind }} --platform ${{ inputs.platform }}
       shell: bash -l {0}
 
     # Print contents of lockfile
