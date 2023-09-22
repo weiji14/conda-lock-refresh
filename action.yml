@@ -39,6 +39,7 @@ runs:
     - name: Print debug info
       run: |
         conda-lock --version
+        mamba --version
         echo Locking ${{ inputs.file }} file for ${{ inputs.platform }} platform.
       shell: bash -l {0}
 
