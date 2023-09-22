@@ -19,7 +19,8 @@ Sample workflow step:
   uses: weiji14/conda-lock-refresh@main
   with:
     file: "environment.yml"
-    kind: "explicit"
+    kind: "lock"
+    mamba: true
     platform: "linux-64"
 ```
 
@@ -33,6 +34,7 @@ https://conda.github.io/conda-lock/cli/gen/#conda-lock-lock
 |:--:|:--|:--|
 | `file` | Path to the conda environment specification(s) | environment.yml |
 | `kind` | Kind of lock file(s) to generate [should be one of 'lock', 'explicit', or 'env'] | lock |
+| `mamba` | Use the mamba solver [should be either 'true' or 'false'] | true |
 | `platform` | The platforms to generate the lockfile for | linux-64 |
 
 
