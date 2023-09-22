@@ -52,7 +52,7 @@ runs:
         rm --force conda-lock.yml
         conda-lock lock $MAMBA --file ${{ inputs.file }} --kind ${{ inputs.kind }} --platform ${{ inputs.platform }}
       env:
-        MAMBA: ${{ fromJSON('{"false": "--no-mamba", "true": "--mamba"}')[inputs.mamba] }}
+        MAMBA: "${{ fromJSON('{"false": "--no-mamba", "true": "--mamba"}')[inputs.mamba] }}"
       shell: bash -l {0}
 
     # Print contents of lockfile
